@@ -33,6 +33,10 @@ namespace BulkyWeb.Controllers
                 ModelState.AddModelError("Name", "The displayOrder cannot exactly match the name.");
             }
 
+            if (createCategoryDtos.Name.ToLower() == "test")
+            {
+                ModelState.AddModelError("", "test is an invalid value");
+            }
 
             if(ModelState.IsValid)
             {
