@@ -2,6 +2,7 @@
 using BulkyWeb.Models;
 using BulkyWeb.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BulkyWeb.Controllers
 {
@@ -29,17 +30,23 @@ namespace BulkyWeb.Controllers
         //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Create(CreateCategoryDtos createCategoryDtos)
         {
-          if(createCategoryDtos.Name == createCategoryDtos.DisplayOrder.ToString()) {
+            if (createCategoryDtos.Name == createCategoryDtos.DisplayOrder.ToString())
+            {
                 ModelState.AddModelError("Name", "The displayOrder cannot exactly match the name.");
             }
 
-            if (createCategoryDtos.Name.ToLower() == "test")
+            if (!createCategoryDtos.Name.IsNullOrEmpty())
             {
-                ModelState.AddModelError("", "test is an invalid value");
-            }
 
-            if(ModelState.IsValid)
+                if (createCategoryDtos.Name.ToLower() == "test")
+                {
+                    ModelState.AddModelError("", "test is an invalid value");
+                }
+            }
+            if (ModelState.IsValid)
             {
+              
+
                 Category category = new Category()
                 {
                     Name = createCategoryDtos.Name,
