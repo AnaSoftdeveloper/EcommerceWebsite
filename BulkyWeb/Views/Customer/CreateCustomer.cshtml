@@ -1,0 +1,38 @@
+﻿@model BulkyWeb.Models.Dtos.CreateCustomerDto;
+<h1>Register</h1>
+<div class="container">
+    <form asp-action="CreateCustomer">
+        <div>
+            <label>Name</label>
+            <input asp-for="customerName" type="text" />
+        </div>
+        <div>
+            <label>Email</label>
+            <input asp-for="customerEmail" type="email" />
+        </div>
+        <div>
+            
+            <p class="fw-bold">How old are you?</p>
+            <input asp-for="ageRange" type="radio" id="child" name="age" value="child">
+            <label for="child">17 years or younger</label><br>
+            <input asp-for="ageRange" type="radio" id="adult" name="age" value="adult">
+            <label for="adult">18 - 64 years</label><br>
+            <input asp-for="ageRange" type="radio" id="senior" name="age" value="senior">
+            <input asp-for="ageRange" type="radio" id="senior" name="age" value="senior">
+            <label for="senior">65 years or older</label>          
+        </div>
+        <div>
+            <label class="fw-bold" >Select your Province</label>
+            <select asp-for="province" class="" name="province">
+                <option>--Select Province--</option>
+                @foreach (var item in ViewBag.provList)
+                {
+                    <option value=@item.Name>@item.Name</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="form-control">Submit</button>
+    </form>
+
+</div>
+
