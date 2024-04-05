@@ -9,9 +9,9 @@ namespace BulkyWeb.Controllers
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db) 
-        { 
-            _db= db;
+        public CategoryController(ApplicationDbContext db)
+        {
+            _db = db;
         }
         public IActionResult Index()
         {
@@ -45,7 +45,7 @@ namespace BulkyWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-              
+
 
                 Category category = new Category()
                 {
@@ -58,7 +58,42 @@ namespace BulkyWeb.Controllers
                 return RedirectToAction("Index");
             }
             return View();
-        
+
+        }
+
+        public IActionResult Edit(int? Id)
+        {
+            if (Id == null || Id == 0)
+            {
+                NotFound();
+            }
+           // there are multiple ways to retrieve a record
+            Category? categoryFromDb = _db.Categories.Find(Id);// find only works with primary
+          //  Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==Id);//it try to find whether there is any record, if not, It returns null object,and we can use linq op[erations, use contain or other modificatio but find ony works for primary key
+          //  Category? categoryFromDb2 = _db.Categories.Where(u=> u.Id==Id).FirstOrDefault();// typically I use second approach but If we need filtering in some situation, we use this approach
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryFromDb);
+        }
+
+        [HttpPost]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult Edit(Category obj)
+        {
+            
+            if (ModelState.IsValid)
+            {   
+                _db.Categories.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+
         }
     }
 }
