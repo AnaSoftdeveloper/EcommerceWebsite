@@ -1,1 +1,1 @@
-This is an ECommerce Website, which is made via new web technologies
+This is an ECommerce Website, N-Tier Architecture is used
