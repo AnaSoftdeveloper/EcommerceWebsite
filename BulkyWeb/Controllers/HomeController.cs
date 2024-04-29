@@ -1,5 +1,5 @@
-using BulkyWeb.Models;
-using BulkyWeb.Models.Dtos;
+using Bulky.Models.Dtos;
+using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

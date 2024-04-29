@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
-namespace BulkyWeb.Models.Dtos
+namespace Bulky.Models.Dtos
 {
     public class CreateCategoryDtos
     {

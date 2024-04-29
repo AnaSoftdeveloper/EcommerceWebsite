@@ -1,4 +1,4 @@
-﻿namespace BulkyWeb.Models.Dtos
+﻿namespace Bulky.Models.Dtos
 {
     public class CreateCustomerDto
     {
