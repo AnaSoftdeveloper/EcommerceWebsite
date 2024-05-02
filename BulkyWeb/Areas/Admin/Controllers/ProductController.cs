@@ -67,12 +67,22 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
 
            Product product = _productRepository.Get(u=>u.Id == Id);
-
             if (product == null)
             {
                 return NotFound();
             }
-            return View(product);
+
+            ProductDto productDto = new ProductDto()
+            {
+                Title = product.Title,
+                Description = product.Description,
+                Author = product.Author,
+                Price = product.Price,
+                Price100 = product.Price100,
+                Price50 = product.Price50,
+                ISBN = product.ISBN
+            };        
+            return View(productDto);
         }
 
         [HttpPost]
