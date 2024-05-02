@@ -14,7 +14,6 @@ namespace Bulky.DataAccess.Repository.IRepository
         T Get(Expression<Func<T, bool>> predicate); // when we want to write LINQ expression this is the general syntax
         //FirstOrDefault(u => u.name = name)
         void Add(T entity);
-        void Update(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
 
