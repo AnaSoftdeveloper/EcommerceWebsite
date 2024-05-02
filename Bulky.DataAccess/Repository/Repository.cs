@@ -48,10 +48,5 @@ namespace Bulky.DataAccess.Repository
         {
            dbSet.RemoveRange(entities);
         }
-
-        public void Update(T entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
