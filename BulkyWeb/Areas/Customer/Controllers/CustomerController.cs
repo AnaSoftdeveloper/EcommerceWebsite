@@ -3,27 +3,30 @@ using Bulky.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BulkyWeb.Controllers
+namespace BulkyWeb.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class CustomerController : Controller
     {
-        private List<Customer> lstCustomers;
-        public CustomerController() {
-            lstCustomers = new List<Customer>()
+        private readonly List<CustomerDto> lstCustomers;
+        public CustomerController()
+        {
+            lstCustomers = new List<CustomerDto>()
             {
-                new Customer(){id=1, customerName="sara", customerEmail="sara@gmail.com" },
-                new Customer(){id=2, customerName="Peter", customerEmail="peter@gmail.com" },
-                new Customer(){id=3, customerName="Jackie", customerEmail="Jackie@gmail.com" }
+                new CustomerDto(){id=1, customerName="sara", customerEmail="sara@gmail.com" },
+                new CustomerDto(){id=2, customerName="Peter", customerEmail="peter@gmail.com" },
+                new CustomerDto(){id=3, customerName="Jackie", customerEmail="Jackie@gmail.com" }
             };
         }
         public IActionResult Index()
-        {      
+        {
             return View(lstCustomers);
         }
 
         [HttpGet]
-        public IActionResult CreateCustomer(){
-            List<Province> lstProv = new List<Province>() { 
+        public IActionResult CreateCustomer()
+        {
+            List<Province> lstProv = new List<Province>() {
             new Province{Id=1, Name="ON"},
             new Province{Id=2,Name="BC"}
             };
@@ -35,11 +38,11 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult CreateCustomer(CreateCustomerDto CreateCustomerDto)
         {
-            if (CreateCustomerDto == null) { return View();}
-  
+            if (CreateCustomerDto == null) { return View(); }
+
             if (ModelState.IsValid)
             {
-                Customer customer = new Customer()
+                CustomerDto customer = new CustomerDto()
                 {
                     customerName = CreateCustomerDto.customerName,
                     customerEmail = CreateCustomerDto.customerEmail,
@@ -47,8 +50,8 @@ namespace BulkyWeb.Controllers
                     pronoun = CreateCustomerDto.pronoun,
                     province = CreateCustomerDto.province
                 };
-            } 
+            }
             return RedirectToAction("Index");
         }
-    }  
+    }
 }

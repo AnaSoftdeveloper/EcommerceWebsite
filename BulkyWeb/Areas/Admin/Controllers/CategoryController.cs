@@ -5,8 +5,9 @@ using Bulky.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BulkyWeb.Controllers
+namespace BulkyWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepo;
@@ -67,11 +68,11 @@ namespace BulkyWeb.Controllers
         {
             if (Id == null || Id == 0)
             {
-               return NotFound();
+                return NotFound();
             }
-           // there are multiple ways to retrieve a record
-            Category? categoryFromDb = _categoryRepo.Get(u=>u.Id==Id);// find only works with primary
-         
+            // there are multiple ways to retrieve a record
+            Category? categoryFromDb = _categoryRepo.Get(u => u.Id == Id);// find only works with primary
+
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -86,9 +87,9 @@ namespace BulkyWeb.Controllers
         //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Edit(Category obj)
         {
-            
+
             if (ModelState.IsValid)
-            {   
+            {
                 _categoryRepo.Update(obj);
                 _categoryRepo.save();
                 TempData["success"] = "Category is updated successfully";
@@ -103,12 +104,12 @@ namespace BulkyWeb.Controllers
         {
             if (Id == null || Id == 0)
             {
-               return NotFound();
+                return NotFound();
             }
             // there are multiple ways to retrieve a record
-            Category? categoryFromDb = _categoryRepo.Get(u=>u.Id==Id);// find only works with primary
-                                                               //  Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==Id);//it try to find whether there is any record, if not, It returns null object,and we can use linq op[erations, use contain or other modificatio but find ony works for primary key
-                                                               //  Category? categoryFromDb2 = _db.Categories.Where(u=> u.Id==Id).FirstOrDefault();// typically I use second approach but If we need filtering in some situation, we use this approach
+            Category? categoryFromDb = _categoryRepo.Get(u => u.Id == Id);// find only works with primary
+                                                                          //  Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==Id);//it try to find whether there is any record, if not, It returns null object,and we can use linq op[erations, use contain or other modificatio but find ony works for primary key
+                                                                          //  Category? categoryFromDb2 = _db.Categories.Where(u=> u.Id==Id).FirstOrDefault();// typically I use second approach but If we need filtering in some situation, we use this approach
             if (categoryFromDb == null)
             {
                 return NotFound();
@@ -133,7 +134,7 @@ namespace BulkyWeb.Controllers
             _categoryRepo.Remove(category);
             _categoryRepo.save();
             TempData["success"] = "Category is deleted successfully";
-            
+
             return RedirectToAction("Index");
 
         }
