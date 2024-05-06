@@ -2,6 +2,8 @@
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.Dtos;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
@@ -10,23 +12,38 @@ namespace BulkyWeb.Areas.Admin.Controllers
     {
 
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
+            
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
 
-          List<Product> products =  _productRepository.GetAll().ToList();
+          List<Product> products = _productRepository.GetAll().ToList();
+          IEnumerable<SelectListItem> categoryList = _categoryRepository.GetAll().ToList().Select(u => new SelectListItem() {
+            Text=u.Name,
+            Value =u.Id.ToString()
+            });
+
+            ViewBag.categoryList = categoryList;
            return View(products);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> categoryList = _categoryRepository.GetAll().ToList().Select(u => new SelectListItem()
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
+            ViewBag.categoryList = categoryList;
             return View();
 
         }
