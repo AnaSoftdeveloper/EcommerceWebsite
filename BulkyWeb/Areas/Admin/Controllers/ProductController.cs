@@ -79,28 +79,49 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 {
                     wwwRootPath = Path.GetFileName(wwwRootPath);
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath, "Images/product");
+                    string productPath = Path.Combine(wwwRootPath, @"Images\product");
+
+                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                    {
+                        //Delete The old Image
+                        string oldImagePath =
+                            Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
 
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
-
                     productVM.Product.ImageUrl = @"\Images\Product\"+ fileName;
                 }
-                _productRepository.Add(productVM.Product);
+                if(productVM.Product.Id == 0)
+                {
+                    _productRepository.Add(productVM.Product);
+                }
+                else
+                {
+                    _productRepository.Update(productVM.Product);
+                }
+             
                 _productRepository.save();
 
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
             else
-            {  //Handling when modalstate is not valid, populate dropdown and return
+            {  //Handling when ModelState is not valid, populate dropdown and return
                 IEnumerable<SelectListItem> categoryList = _categoryRepository.GetAll().ToList().Select(u => new SelectListItem()
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
                 });
+
+
 
                 // ViewBag.categoryList = categoryList;
                 //  ViewData["categoryList"] = categoryList;
