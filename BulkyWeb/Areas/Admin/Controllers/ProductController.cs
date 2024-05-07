@@ -27,13 +27,13 @@ namespace BulkyWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
 
-          List<Product> products = _productRepository.GetAll().ToList();
-          IEnumerable<SelectListItem> categoryList = _categoryRepository.GetAll().ToList().Select(u => new SelectListItem() {
-            Text=u.Name,
-            Value =u.Id.ToString()
-            });
+          List<Product> products = _productRepository.GetAll(includeProperties:"Category").ToList();
+          //IEnumerable<SelectListItem> categoryList = _categoryRepository.GetAll(includeProperties:"Category").ToList().Select(u => new SelectListItem() {
+          //  Text=u.Name,
+          //  Value =u.Id.ToString()
+          //  });
 
-            ViewBag.categoryList = categoryList;
+           // ViewBag.categoryList = categoryList;
            return View(products);
         }
 

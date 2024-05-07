@@ -10,8 +10,8 @@ namespace Bulky.DataAccess.Repository.IRepository
     public interface IRepository<T> where T : class
     {
         //T-Category
-        IEnumerable<T> GetAll();
-        T Get(Expression<Func<T, bool>> predicate); // when we want to write LINQ expression this is the general syntax
+        IEnumerable<T> GetAll(string? includeProperties = null);
+        T Get(Expression<Func<T, bool>> predicate, string? includeProperties = null); // when we want to write LINQ expression this is the general syntax
         //FirstOrDefault(u => u.name = name)
         void Add(T entity);
         void Remove(T entity);
