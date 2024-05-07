@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,8 +11,6 @@ namespace Bulky.Models.Dtos
 {
     public class ProductDto
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Title { get; set; }
 
@@ -44,5 +44,9 @@ namespace Bulky.Models.Dtos
         public double Price100 { get; set; }
 
         public int CategoryId { get; set; }
+
+        [ValidateNever]
+        public string ImageUrl { get; set; }
+
     }
 }

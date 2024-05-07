@@ -13,12 +13,14 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
             
 
-        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository, IWebHostEnvironment webHostEnvironment)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -36,87 +38,92 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Upsert(int? Id)  //Create and Update=UpSert
         {
             IEnumerable<SelectListItem> categoryList = _categoryRepository.GetAll().ToList().Select(u => new SelectListItem()
             {
                 Text = u.Name,
                 Value = u.Id.ToString()
             });
-            // ViewBag.categoryList = categoryList;
-            ViewData["categoryList"] = categoryList;
-            return View();
 
+            // ViewBag.categoryList = categoryList;
+            //  ViewData["categoryList"] = categoryList;
+            ProductVM productVM = new ProductVM()
+            {
+                CategoryList = categoryList,
+                Product = new Product()
+            };
+
+            if (Id == null || Id == 0) 
+            { 
+                //create
+             return View(productVM);
+            }
+            else
+            {
+                //update
+                Product product = _productRepository.Get(u=> u.Id == Id);
+                productVM.Product = product;
+                return View(productVM);
+            }         
         }
 
 
         [HttpPost]
-        public IActionResult Create(ProductDto obj)
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                Product product = new Product()
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if(file != null)
                 {
-                    Title = obj.Title,
-                    Description = obj.Description,
-                    Author = obj.Author,
-                    ISBN = obj.ISBN,
-                    Price = obj.Price,
-                    Price50 = obj.Price50,
-                    Price100 = obj.Price100,
-                    ListPrice = obj.ListPrice,
-                };
-                _productRepository.Add(product);
+                    wwwRootPath = Path.GetFileName(wwwRootPath);
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, "Images/product");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    productVM.Product.ImageUrl = @"\Images\Product\"+ fileName;
+                }
+                _productRepository.Add(productVM.Product);
                 _productRepository.save();
 
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
-            return View();
+            else
+            {  //Handling when modalstate is not valid, populate dropdown and return
+                IEnumerable<SelectListItem> categoryList = _categoryRepository.GetAll().ToList().Select(u => new SelectListItem()
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
 
+                // ViewBag.categoryList = categoryList;
+                //  ViewData["categoryList"] = categoryList;
+                productVM.CategoryList = categoryList;
+                return View(productVM);
+            }         
         }
 
-        public IActionResult Edit(int? Id)
-        {
-            if (Id == null ||Id == 0)
-            {
-                return NotFound();
-                
-            }
-
-           Product product = _productRepository.Get(u=>u.Id == Id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            ProductDto productDto = new ProductDto()
-            {
-                Title = product.Title,
-                Description = product.Description,
-                Author = product.Author,
-                Price = product.Price,
-                Price100 = product.Price100,
-                Price50 = product.Price50,
-                ISBN = product.ISBN
-            };        
-            return View(productDto);
-        }
 
         [HttpPost]
-        public IActionResult Edit(ProductDto productDto)
+        public IActionResult Edit(ProductVM productDto)
         {
             if (ModelState.IsValid)
             {
                 Product product = new Product()
                 {
-                    Title = productDto.Title,
-                    Description = productDto.Description,
-                    Author = productDto.Author,
-                    Price = productDto.Price,
-                    Price100 = productDto.Price100,
-                    Price50 = productDto.Price50,
-                    ISBN = productDto.ISBN
+                    Title = productDto.Product.Title,
+                    Description = productDto.Product.Description,
+                    Author = productDto.Product.Author,
+                    Price = productDto.Product.Price,
+                    Price100 = productDto.Product.Price100,
+                    Price50 = productDto.Product.Price50,
+                    ISBN = productDto.Product.ISBN
                 };
 
                 _productRepository.Update(product);

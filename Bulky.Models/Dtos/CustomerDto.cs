@@ -8,7 +8,6 @@ namespace Bulky.Models.Dtos
 {
     public class CustomerDto
     {
-        public int id { get; set; }
         public string customerName { get; set; } = string.Empty;
         public string customerEmail { get; set; }
         public string password { get; set; }

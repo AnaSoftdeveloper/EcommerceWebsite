@@ -13,9 +13,9 @@ namespace BulkyWeb.Areas.Customer.Controllers
         {
             lstCustomers = new List<CustomerDto>()
             {
-                new CustomerDto(){id=1, customerName="sara", customerEmail="sara@gmail.com" },
-                new CustomerDto(){id=2, customerName="Peter", customerEmail="peter@gmail.com" },
-                new CustomerDto(){id=3, customerName="Jackie", customerEmail="Jackie@gmail.com" }
+                new CustomerDto(){ customerName="sara", customerEmail="sara@gmail.com" },
+                new CustomerDto(){ customerName="Peter", customerEmail="peter@gmail.com" },
+                new CustomerDto(){ customerName="Jackie", customerEmail="Jackie@gmail.com" }
             };
         }
         public IActionResult Index()

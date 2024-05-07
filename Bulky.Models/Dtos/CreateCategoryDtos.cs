@@ -12,7 +12,6 @@ namespace Bulky.Models.Dtos
 
         [DisplayName("Display Order")]
         [Range(1, 100 , ErrorMessage ="Diplay Order must be between 1-100")]
-
         public int DisplayOrder { get; set; }
     }
 }
