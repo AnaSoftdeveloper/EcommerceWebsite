@@ -43,3 +43,102 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.detail-section {
+    display:flex;
+}
+
+    .detail-section .detail-Leftside {
+        background-color: #fff;
+        padding: 2rem;
+        width: 35%;
+        border-radius: 1rem;
+        position:relative;
+    }
+
+    .detail-Leftside img{
+        text-align:center;
+     
+    }
+
+.detail__backhome {
+   margin-bottom:4rem;
+}
+
+.detail__img{
+   background-size:cover;
+   border-radius:.6rem;
+   display:flex;
+}
+
+.detail__img img{
+    width:100%;
+    border-radius:1rem;
+}
+.content__header {
+    background-color: #ffa500;
+    display: inline-block;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    padding: .6rem;
+    color: white;
+    font-weight: 200;
+    font-size: 1rem;
+}
+
+.Text-dark-grey {
+    color:#999;
+}
+
+.content__table {
+    text-align:center;
+    margin-top:1rem;
+    padding:1rem 0;
+}
+.content__table thead {
+   border-bottom: .1rem solid #ccc;
+}
+table{
+    margin-top:1rem;
+}
+
+.content__table th{
+   padding:0 2rem;
+}
+
+.table__row {
+    color: #ffa500;
+    font-weight: 200;
+    font-size: 1rem;
+}
+
+
+.content__paragraph{
+    margin-top:4rem;
+}
+
+input {
+   width:100%; 
+   outline:0;
+   border:none;
+   background-color:red;
+   margin-top:.4rem;
+}
+
+.content__button {
+    width: 30%;
+    border: .1rem solid #999;
+    border-radius: .75rem;
+    padding-right: 1rem;
+    margin-top: 3rem;
+}
+
+.btn__Add-Card {
+    text-transform: uppercase;
+    padding:.6rem 1rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    background-color: #325d88;
+    color: #fff;
+    border-radius:.75rem;
+}

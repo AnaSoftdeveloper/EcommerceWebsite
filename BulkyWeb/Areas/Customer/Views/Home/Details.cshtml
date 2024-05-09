@@ -1,0 +1,50 @@
+﻿@model Product;
+
+<div class="detail-section" > 
+    <aside class="detail-Leftside" >
+        <a href="#" Class="detail__backhome btn btn-info">Back To Home</a>
+        <div class="detail__img">  
+            <img src="@Model.ImageUrl" />
+        </div>
+       
+    </aside>
+    <div class="content" style="padding:1rem; width:75%;">
+        <div class="content__header">
+           @Model.Category.Name
+        </div>
+         <p>
+            <div class="content__Item Text-dark-gray">ISBN:@Model.ISBN</div>
+            <div class="content__Item text-dark-grey ">List Price: @Model.ListPrice</div>
+            <div>
+                <table class="content__table" >
+                    <thead>
+                        <tr>
+                            <th>Quantity</th>
+                            <th>1-50</th>
+                            <th>51-100</th>
+                            <th>100+</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table__row">
+                            <td></td>
+                            <td>@Model.Price</td>
+                            <td>@Model.Price</td>
+                            <td>@Model.Price50</td>
+                            <td>@Model.Price100</td>
+                        </tr>               
+                    </tbody>                                          
+                </table>
+            </div>
+        </p> 
+        <p class="content__paragraph">
+            Lorem hhj industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+        </p>
+        <div  class="content__button" style="display:flex;">
+            <div class="btn btn-dark">Count</div>
+            <div><input type="number"  /></div>
+        </div>
+
+        <div class="btn btn-outline-dark btn__Add-Card">ADD TO CARD(Coming soon)</div>
+    </div>
+</div>

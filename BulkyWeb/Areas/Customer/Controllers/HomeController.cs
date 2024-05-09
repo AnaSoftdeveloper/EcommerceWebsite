@@ -46,6 +46,12 @@ namespace BulkyWeb.Areas.Customer.Controllers
             return View();
         }
 
+        public IActionResult Details(int Id)
+        {
+            Product product = _productRepository.Get(u=>u.Id==Id, includeProperties:"Category");
+            return View(product);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

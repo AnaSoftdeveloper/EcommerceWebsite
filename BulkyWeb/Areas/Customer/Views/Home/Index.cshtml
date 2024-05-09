@@ -14,16 +14,16 @@
                                     <p class="card-title text-warning text-center"><b>@product.Author</b></p>
                                 </div>
                                 <div class="pl-1">
-                                   <p class="text-dark text-dark opacity-75 text-uppercase text-center mb-0">List price: <span>@product.ListPrice.ToString("c")</span></p>
+                                   <p class="text-dark text-dark opacity-75 text-uppercase text-center mb-0">List price: <span style="text-decoration:line-through;">@product.ListPrice.ToString("c")</span></p>
                                 </div>
                                 <div class="pl-1">
                                     <p class="text-dark text-dark opacity-75 text-uppercase text-center">As low as:<span>@product.Price100.ToString("c")</span></p>
                                 </div>
-                                <div class="btn btn-primary bg-gradient border-0 form-control">
-                                    <a href="#">DETAILS</a>
+                                <div>
+                                    <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary bg-gradient border-0 form-control">DETAILS</a>
                                 </div>
                               </div>
-                        </div>
+                        </div> 
                    </div>
                </div>
            </div>
