@@ -42,6 +42,7 @@ html {
 }
 body {
   margin-bottom: 60px;
+  box-sizing:border-box;
 }
 
 .detail-section {
@@ -117,28 +118,36 @@ table{
     margin-top:4rem;
 }
 
-input {
+/*input {
    width:100%; 
    outline:0;
    border:none;
    background-color:red;
    margin-top:.4rem;
-}
+}*/
 
-.content__button {
+.input__group{
     width: 30%;
     border: .1rem solid #999;
     border-radius: .75rem;
-    padding-right: 1rem;
+    padding-right: .6rem;
     margin-top: 3rem;
+    display:flex;
 }
+
+.input__number {
+    outline:none;
+    border:none;
+    width:100%;
+}
+
 
 .btn__Add-Card {
     text-transform: uppercase;
-    padding:.6rem 1rem;
+    padding: .6rem 1rem;
     font-weight: 600;
     margin-top: 2rem;
     background-color: #325d88;
     color: #fff;
-    border-radius:.75rem;
+    border-radius: .75rem;
 }
